@@ -29,9 +29,9 @@ const ProjectsPage = () => {
   };
 
   const all_projects: TProjectDetails[] = [
+    ecommerceProject,
     priceScraperProject,
     sudokuProject,
-    ecommerceProject,
   ];
 
   return (
