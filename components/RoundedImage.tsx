@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface RoundedImageProps {
   image_src: string;
   image_alt: string;
@@ -9,7 +11,7 @@ const RoundedImage: React.FC<RoundedImageProps> = ({
 }) => {
   return (
     <div className="w-72 sm:w-80 2xl:w-96 rounded-full overflow-hidden">
-      <img src={image_src} alt={image_alt} />
+      <Image src={image_src} alt={image_alt} width={384} height={384} />
     </div>
   );
 };
