@@ -38,7 +38,7 @@ const ProjectsPage = () => {
     <main className="w-full">
       {/* <h1 className="text-3xl underline mb-8 mt-2 font-bold">Projects</h1> */}
       <div className="flex justify-center ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-28 sm:gap-x-2 lg:grid-cols-3 lg:max-w-7xl lg:gap-x-4 gap-y-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-28 gap-y-12 sm:gap-x-2 lg:grid-cols-3 lg:max-w-7xl lg:gap-x-2 xl:gap-x-4">
           {all_projects.map((project, index) => {
             return (
               <div className="w-full flex grow" key={index}>
