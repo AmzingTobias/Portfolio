@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NavBar />
-        <div className="content w-11/12 lg:w-9/12 xl:w-9/12 5xl:w-7/12 flex mx-auto bg-zinc-800 bg-opacity-20 mt-6 rounded-sm p-4">
+        <div className="content w-11/12 lg:w-9/12 xl:w-9/12 5xl:w-7/12 max-w-7xl flex mx-auto bg-zinc-800 bg-opacity-20 mt-6 rounded-sm p-6">
           {children}
         </div>
       </body>

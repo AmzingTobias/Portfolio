@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface IProjectCardProps {
@@ -20,10 +21,17 @@ const ProjectCard: React.FC<IProjectCardProps> = ({
 
   return (
     <div
-      className="w-72 sm:w-80 md:w-96 hover:cursor-pointer transition-colors duration-150 hover:bg-red-500 hover:bg-opacity-90"
+      style={{ maxWidth: 432 }}
+      className="hover:cursor-pointer transition-colors duration-150 hover:bg-red-500 hover:bg-opacity-90"
       onClick={redirectToProject}
     >
-      <img src={img_source} alt={title} />
+      <Image
+        src={img_source}
+        alt={title}
+        width={432}
+        height={480}
+        className="bg-zinc-800 bg-opacity-30"
+      />
       <div className="p-1">
         <h3 className="mt-2 text-2xl font-semibold">{title}</h3>
         {mini_desc && (
