@@ -1,12 +1,14 @@
 "use client";
 import { useRef, useEffect } from "react";
+import List, { TList } from "./List";
 
 export type TTimelineEvent = {
   title: string;
   role?: string;
   startdate: string;
   endDate?: string;
-  details: string;
+  details?: string;
+  bulletpointLists?: TList[];
 };
 
 interface ITimelineProps {
@@ -35,7 +37,7 @@ const Timeline: React.FC<ITimelineProps> = ({ events }) => {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.2 }
     );
 
     // Add timeline events to Intersection Observer
