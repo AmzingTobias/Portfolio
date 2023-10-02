@@ -81,16 +81,25 @@ const Timeline: React.FC<ITimelineProps> = ({ events }) => {
                   ? `${event.startdate} - ${event.endDate}`
                   : event.startdate}
               </p>
-              <p
+              <div
                 className={`mt-2 text-md sm:text-lg ${
                   index + 1 === events.length ? "mb-0" : "mb-4"
                 }`}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </p>
+                <p>{event.details}</p>
+                <div className="mt-2">
+                  {event.bulletpointLists &&
+                    event.bulletpointLists.map((bulletPointList, index) => (
+                      <List
+                        key={index}
+                        list={{
+                          title: bulletPointList.title,
+                          points: bulletPointList.points,
+                        }}
+                      />
+                    ))}
+                </div>
+              </div>
             </div>
           </li>
         ))}
