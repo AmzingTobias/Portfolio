@@ -1,3 +1,6 @@
+"use client";
+import { useRef, useEffect } from "react";
+
 export type TTimelineEvent = {
   title: string;
   role?: string;
@@ -11,11 +14,54 @@ interface ITimelineProps {
 }
 
 const Timeline: React.FC<ITimelineProps> = ({ events }) => {
+  const timelineEventsRefs = useRef<HTMLLIElement[]>([]);
+
+  useEffect(() => {
+    // Initialize Intersection Observer
+    const observer = new IntersectionObserver(
+      (timelineEvents) => {
+        timelineEvents.forEach((event) => {
+          const FADED_FLAG = "faded-in";
+          if (event.isIntersecting) {
+            // If in view, remove the opacity 0 flag if it exists
+            event.target.classList.remove("opacity-0");
+            event.target.classList.add(FADED_FLAG);
+          } else {
+            // Don't make elements that have already faded in, fade back out
+            if (!event.target.classList.contains(FADED_FLAG)) {
+              // If not in view, set to 0 opacity
+              event.target.classList.add("opacity-0");
+            }
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    // Add timeline events to Intersection Observer
+    timelineEventsRefs.current.forEach((pointRef) => {
+      observer.observe(pointRef);
+    });
+
+    // Clean up the observer when component unmounts
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <section>
       <ol className="border-l-2 border-red-500">
         {events.map((event, index) => (
-          <li key={index}>
+          <li
+            key={index}
+            className="transition-opacity duration-500 ease-in transform"
+            ref={(liRef) => {
+              if (liRef) {
+                timelineEventsRefs.current[index] = liRef;
+              }
+            }}
+          >
             <div className="flex-start flex items-center">
               <div className="-ml-[0.560rem] -mt-2 mr-[1.05rem] flex h-4 w-4 items-center justify-center rounded-full bg-red-500"></div>
               <h4 className="-mt-2 text-md sm:text-xl font-semibold">
