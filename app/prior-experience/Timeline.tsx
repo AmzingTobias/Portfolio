@@ -1,7 +1,8 @@
 export type TTimelineEvent = {
+  title: string;
+  role?: string;
   startdate: string;
   endDate?: string;
-  title: string;
   details: string;
 };
 
@@ -16,21 +17,24 @@ const Timeline: React.FC<ITimelineProps> = ({ events }) => {
         {events.map((event, index) => (
           <li key={index}>
             <div className="flex-start flex items-center">
-              <div className="-ml-2 -mt-2 mr-3 flex h-4 w-4 items-center justify-center rounded-full bg-red-500"></div>
-              <h4 className="-mt-2 text-xl font-semibold">{event.title}</h4>
+              <div className="-ml-[0.560rem] -mt-2 mr-[1.05rem] flex h-4 w-4 items-center justify-center rounded-full bg-red-500"></div>
+              <h4 className="-mt-2 text-md sm:text-xl font-semibold">
+                {event.title}
+              </h4>
             </div>
             <div
-              className={`mb-1 ml-6 pb-6 ${
+              className={`mb-1 ml-6 ${
                 index + 1 === events.length ? "pb-0" : "pb-6"
               }`}
             >
-              <p className="text-smtransition italic font-semibold text-blue-400">
+              <h4 className="text-md sm:text-lg font-semibold">{event.role}</h4>
+              <p className="text-sm sm:text-base transition italic font-semibold text-blue-400">
                 {event.endDate
                   ? `${event.startdate} - ${event.endDate}`
                   : event.startdate}
               </p>
               <p
-                className={`mt-2 text-lg ${
+                className={`mt-2 text-md sm:text-lg ${
                   index + 1 === events.length ? "mb-0" : "mb-4"
                 }`}
               >

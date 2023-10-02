@@ -2,19 +2,22 @@ import Timeline, { TTimelineEvent } from "./Timeline";
 
 const prior_experiences: TTimelineEvent[] = [
   {
-    title: "Computer Science BSC (Loughborough university)",
+    title: "Computer Science BSC",
+    role: "Loughborough university",
     startdate: "October 2020",
     endDate: "June 2024",
     details: "",
   },
   {
-    title: "BAE Systems – Software Engineer Industrial placement",
+    title: "BAE Systems",
+    role: "Software Engineer Industrial placement",
     startdate: "2022",
     endDate: "2023",
     details: "",
   },
   {
-    title: "McDonald’s – Crew Trainer",
+    title: "McDonald’s",
+    role: "Crew Trainer",
     startdate: "2018",
     endDate: "2022",
     details: "",
@@ -26,12 +29,14 @@ const prior_experiences: TTimelineEvent[] = [
     details: "",
   },
   {
-    title: "Work experience at Accumulate Wealth Management Ltd.",
+    title: "Accumulate Wealth Management Ltd",
+    role: "Work experience",
     startdate: "2019",
     details: "",
   },
   {
-    title: "Work experience at ECS Digital, London",
+    title: "ECS Digital, London",
+    role: "Work experience",
     startdate: "2019",
     endDate: "Between GCSEs and Sixth form",
     details: "",
@@ -43,7 +48,8 @@ const prior_experiences: TTimelineEvent[] = [
     details: "",
   },
   {
-    title: "People for Animal Care Trust (PACT) Voluntary work",
+    title: "People for Animal Care Trust (PACT)",
+    role: "Voluntary work",
     startdate: "2017",
     details: "",
   },
@@ -52,7 +58,9 @@ const prior_experiences: TTimelineEvent[] = [
 const PriorExperiencePage = () => {
   return (
     <div>
-      <Timeline events={prior_experiences} />
+      <div className="sm:px-2 md:px-4 md:py-2 lg:px-6 lg:py-4">
+        <Timeline events={prior_experiences} />
+      </div>
     </div>
   );
 };
