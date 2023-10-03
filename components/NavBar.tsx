@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const NavBar = () => {
   const navbarStyles =
     "sm:inline hover:underline hover:text-red-500 font-bold sm:ml-16 sm:first:ml-0";
@@ -7,13 +9,13 @@ const NavBar = () => {
       <nav className="text-center mb-4 text-xl">
         <ul>
           <li className={navbarStyles}>
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
           </li>
           <li className={navbarStyles}>
-            <a href="/projects">Projects</a>
+            <Link href="/projects">Projects</Link>
           </li>
           <li className={navbarStyles}>
-            <a href="/prior-experience">Prior experience</a>
+            <Link href="/prior-experience">Prior experience</Link>
           </li>
         </ul>
       </nav>
