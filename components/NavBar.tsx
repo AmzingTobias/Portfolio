@@ -2,11 +2,11 @@ import Link from "next/link";
 
 const NavBar = () => {
   const navbarStyles =
-    "sm:inline hover:underline hover:text-red-500 font-bold sm:ml-16 sm:first:ml-0";
+    "sm:inline sm:text-white pb-2 last:pb-0 sm:pb-0 underline sm:no-underline hover:underline hover:text-red-500 font-bold sm:ml-16 sm:first:ml-0";
 
   return (
     <div>
-      <nav className="text-center mb-4 text-xl">
+      <nav className="text-center mb-4 text-2xl ">
         <ul>
           <li className={navbarStyles}>
             <Link href="/">About me</Link>
