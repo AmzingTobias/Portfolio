@@ -25,11 +25,10 @@ export default function Home() {
         <hr className="my-6" />
         <div className="text-lg">
           <p>
-            Hi, my name is Tobias. I&apos;m from a small town in Norfolk,
-            England. I&apos;m {getAge()} years old and attending Loughborough
-            University. I&apos;m in my final year, studying Computer Science BSc
-            with plans to graduate in the summer of 2024. I&apos;m currently on
-            track for a first.
+            Hi, my name is Tobias. I&apos;m {getAge()} years old and attending
+            Loughborough University. I&apos;m in my final year, studying
+            Computer Science BSc and will graduate in the summer of 2024.
+            I&apos;m currently on track for a first.
           </p>
           <div className="my-6" />
           <p>
@@ -37,15 +36,15 @@ export default function Home() {
             manager describing my work ethic as &quot;exceptional&quot;. For as
             long as I can remember I&apos;ve had a passion for technology and
             programming. When I was 5 years old, I bought a trampoline with my
-            parent&apos;s eBay account (I didn&apos;t get to keep it). I&apos;ve
+            parents&apos; eBay account (I didn&apos;t get to keep it). I&apos;ve
             known since starting high school that I wanted to be a Software
             Engineer.
           </p>
           <div className="my-6" />
           <p>
             The first programming language I learnt was Python, having been
-            taught it in School. Since starting University I&apos;ve broadened
-            my skills, either through my modules or independent learning.
+            taught it in school. Since starting university I&apos;ve broadened
+            my skills, either through my modules, or independent learning.
           </p>
           <List
             list={{
@@ -64,10 +63,10 @@ export default function Home() {
           </p>
           <div className="my-6" />
           <p>
-            In addition to technology, I have a strong interest in Economics and
-            Business, I keep up to date with the stock market and follow the
-            news regularly to stay informed with what&apos;s happening around
-            the world.
+            Although my passion is technology, I also have a strong interest in
+            economics and business. I keep up to date with the stock market and
+            follow the news regularly to stay informed with what&apos;s
+            happening around the world.
           </p>
           <div className="my-6" />
           <p>
