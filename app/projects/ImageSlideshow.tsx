@@ -34,7 +34,7 @@ const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
       }, slideshowAnimationDuration);
       return () => clearInterval(interval);
     }
-  }, [slideshowAnimationDuration]);
+  }, [slideshowAnimationDuration, srcs.length]);
 
   return (
     <div className="relative m-auto">
