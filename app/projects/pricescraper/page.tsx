@@ -48,6 +48,7 @@ const priceScraper_project: TProjectTemplate = {
       },
     ],
   },
+  use_row: false,
 };
 
 const PriceScraperProjectPage = () => {
@@ -58,6 +59,7 @@ const PriceScraperProjectPage = () => {
         image_details={priceScraper_project.image_details}
         project_details={priceScraper_project.project_details}
         project_btns={priceScraper_project.project_btns}
+        use_row={false}
       />
     </main>
   );

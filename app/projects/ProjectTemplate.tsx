@@ -7,6 +7,7 @@ export type TProjectTemplate = {
   project_details: TProjectDetails[];
   image_details: IImageSlideshowProps;
   project_btns: IProjectVisitBtns;
+  use_row: boolean;
 };
 
 interface IProjectTemplateProps extends TProjectTemplate {}
@@ -16,12 +17,15 @@ const ProjectTemplate: React.FC<IProjectTemplateProps> = ({
   project_details,
   image_details,
   project_btns,
+  use_row,
 }) => {
   return (
     <div>
-      <div className="flex flex-col ">
+      <div className={`flex flex-col ${use_row ? "2xl:flex-row" : ""}`}>
         <div className="flex flex-row justify-center">
-          <div className="w-full max-w-3xl m-2 flex-auto justify-center align-middle">
+          <div
+            className={`w-full max-w-3xl m-2 flex-auto justify-center align-middle`}
+          >
             <ImageSlideshow
               srcs={image_details.srcs}
               height={image_details.height}
