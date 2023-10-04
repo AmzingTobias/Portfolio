@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
-import List, { TList } from "./List";
+import List, { TList } from "../../components/List";
 
 export type TTimelineEvent = {
   title: string;
