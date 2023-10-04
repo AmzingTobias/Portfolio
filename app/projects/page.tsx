@@ -1,6 +1,6 @@
 import React from "react";
 import ProjectCard from "./ProjectCard";
-import psImage from "../../public/pricescraper/pricescraper-demo.png";
+import psImage from "../../public/pricescraper/demo.png";
 import sudokuImage from "../../public/sudoku/showcase.gif";
 import shoppingCart from "../../public/ecommerce/cart.png";
 
