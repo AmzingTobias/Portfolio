@@ -1,6 +1,7 @@
 import Image from "next/image";
 import image_of_me from "../public/me.jpg";
 import RoundedImage from "../components/RoundedImage";
+import List from "@/components/List";
 
 const getAge = (): number => {
   // Get the current date
@@ -17,38 +18,64 @@ const getAge = (): number => {
 export default function Home() {
   return (
     <main className="w-full">
-      <div className="pb-4">
+      <div>
         <div className="flex justify-center ">
           <RoundedImage image_src={image_of_me.src} image_alt="Image of me" />
         </div>
         <hr className="my-6" />
-        <div className="">
-          <p className="text-lg">
+        <div className="text-lg">
+          <p>
             Hi, my name is Tobias. I&apos;m from a small town in Norfolk,
             England. I&apos;m {getAge()} years old and attending Loughborough
-            University, I’m in my final year studying computer science BSc with
-            plans to graduate in summer 2024. I&apos;m currently on track for a
-            First. I&apos;m passionate about Formula 1, supporting Mercedes, I
-            watch almost every race, including the ones I have to wake up at 6am
-            for. I spend lots of my spare time playing games, watching films,
-            listening to music, and hanging out with my friends and family.
-            I&apos;m hard working and very dedicated, with my work ethic having
-            been described as &quot;exceptional&quot;. The primary reason for
-            this is my passion for technology, it has always been my interest
-            throughout school, and I&apos;ve been very fortunate to know that I
-            want to be a Software Engineer.
+            University. I&apos;m in my final year, studying Computer Science BSc
+            with plans to graduate in the summer of 2024. I&apos;m currently on
+            track for a first.
           </p>
           <div className="my-6" />
-          <p className="text-lg">
-            I have a passion for computers and programming, having done so since
-            a young age. I&apos;ve built my own computer, and am regularly
-            called upon via friends and family for any technology related
-            problems. The first programming language I really used was python,
-            but since starting University I have learnt C++, Java,
-            Javascript/Typescript (and the different frameworks to create
-            frontend and backend applications). I have experience in setting up
-            a Jenkins pipeline for automated testing, and configuring a VPS to
-            host my own websites / server.
+          <p>
+            I&apos;m hard working and very dedicated, with my placement year
+            manager describing my work ethic as &quot;exceptional&quot;. For as
+            long as I can remember I&apos;ve had a passion for technology and
+            programming. When I was 5 years old, I bought a trampoline with my
+            parent&apos;s eBay account (I didn&apos;t get to keep it). I&apos;ve
+            known since starting high school that I wanted to be a Software
+            Engineer.
+          </p>
+          <div className="my-6" />
+          <p>
+            The first programming language I learnt was Python, having been
+            taught it in School. Since starting University I&apos;ve broadened
+            my skills, either through my modules or independent learning.
+          </p>
+          <List
+            list={{
+              title: "This includes:",
+              points: [
+                "C++",
+                "JavaScript/TypeScript (and the frameworks to create frontend and backend applications)",
+                "Java",
+              ],
+            }}
+          />
+          <p>
+            In addition, I have experience with setting up a Jenkins pipeline
+            for automated testing, writing requirements, creating software
+            design diagrams, and configuring a VPS to host my own web server.
+          </p>
+          <div className="my-6" />
+          <p>
+            In addition to technology, I have a strong interest in Economics and
+            Business, I keep up to date with the stock market and follow the
+            news regularly to stay informed with what&apos;s happening around
+            the world.
+          </p>
+          <div className="my-6" />
+          <p>
+            My hobbies include gaming, watching films, listening to music, and
+            hanging out with my friends and family. I&apos;m passionate about F1
+            (Mercedes), I watch almost every race, including the ones I have to
+            wake up at 6am for. I also enjoy football and occasionally play
+            golf.
           </p>
         </div>
       </div>
