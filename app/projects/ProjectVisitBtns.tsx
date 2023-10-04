@@ -6,7 +6,7 @@ type TProjectLinkBtns = {
   link: string;
 };
 
-interface IProjectVisitBtns {
+export interface IProjectVisitBtns {
   visit_links?: TProjectLinkBtns[];
   github_links?: TProjectLinkBtns[];
 }

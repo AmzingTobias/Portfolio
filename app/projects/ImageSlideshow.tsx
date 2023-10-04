@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-interface IImageSlideshowProps {
+export interface IImageSlideshowProps {
   srcs: string[];
   width: number;
   height: number;
@@ -38,7 +38,12 @@ const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
 
   return (
     <div className="relative m-auto">
-      <Image src={srcs[imageIndex]} alt="image" width={width} height={height} />
+      <Image
+        src={srcs[imageIndex]}
+        alt="slideshow"
+        width={width}
+        height={height}
+      />
       <a
         className={`${arrowStyles} rounded-r-sm`}
         onClick={() => {

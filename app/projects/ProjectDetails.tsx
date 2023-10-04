@@ -1,10 +1,10 @@
 import List from "../../components/List";
 
-type detail = string | string[];
+export type TProjectDetails = string | string[];
 
 interface IProjectDetailsProps {
   project_name: string;
-  details: detail[];
+  details: TProjectDetails[];
 }
 
 const ProjectDetails: React.FC<IProjectDetailsProps> = ({
