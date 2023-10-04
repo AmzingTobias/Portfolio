@@ -17,12 +17,12 @@ const getAge = (): number => {
 export default function Home() {
   return (
     <main className="w-full">
-      <div className="2xl:flex 2xl:flex-row-reverse p-4">
-        <div className="flex justify-center 2xl:flex-1 2xl:h-full 2xl:max-w-fit">
+      <div className="pb-4">
+        <div className="flex justify-center ">
           <RoundedImage image_src={image_of_me.src} image_alt="Image of me" />
         </div>
-        <hr className="my-6 2xl:hidden" />
-        <div className="2xl:flex-1 2xl:flex 2xl:flex-col 2xl:justify-center 2xl:pr-8">
+        <hr className="my-6" />
+        <div className="">
           <p className="text-lg">
             Hi, my name is Tobias. I&apos;m from a small town in Norfolk,
             England. I&apos;m {getAge()} years old and attending Loughborough
@@ -38,7 +38,7 @@ export default function Home() {
             throughout school, and I&apos;ve been very fortunate to know that I
             want to be a Software Engineer.
           </p>
-          <br className="my-2" />
+          <div className="my-6" />
           <p className="text-lg">
             I have a passion for computers and programming, having done so since
             a young age. I&apos;ve built my own computer, and am regularly
