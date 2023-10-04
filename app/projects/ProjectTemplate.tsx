@@ -5,7 +5,7 @@ import ProjectVisitBtns, { IProjectVisitBtns } from "./ProjectVisitBtns";
 export type TProjectTemplate = {
   project_name: string;
   project_details: TProjectDetails[];
-  image_details: IImageSlideshowProps;
+  image_details?: IImageSlideshowProps;
   project_btns: IProjectVisitBtns;
   use_row: boolean;
 };
@@ -22,18 +22,22 @@ const ProjectTemplate: React.FC<IProjectTemplateProps> = ({
   return (
     <div>
       <div className={`flex flex-col ${use_row ? "2xl:flex-row" : ""}`}>
-        <div className="flex flex-row justify-center">
-          <div
-            className={`w-full max-w-3xl m-2 flex-auto justify-center align-middle`}
-          >
-            <ImageSlideshow
-              srcs={image_details.srcs}
-              height={image_details.height}
-              width={image_details.width}
-              slideshowSpeedMs={image_details.slideshowSpeedMs}
-            />
+        {image_details !== undefined ? (
+          <div className="flex flex-row justify-center">
+            <div
+              className={`w-full max-w-3xl m-2 flex-auto justify-center align-middle`}
+            >
+              <ImageSlideshow
+                srcs={image_details.srcs}
+                height={image_details.height}
+                width={image_details.width}
+                slideshowSpeedMs={image_details.slideshowSpeedMs}
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
         <div className="flex flex-col w-full justify-center m-2 flex-shrink">
           <ProjectDetails
             project_name={project_name}
