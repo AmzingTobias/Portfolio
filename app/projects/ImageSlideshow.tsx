@@ -26,7 +26,7 @@ const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
 
   // Effect to increment the counter every 4 seconds
   useEffect(() => {
-    if (slideshowAnimationDuration !== 0) {
+    if (slideshowAnimationDuration !== 0 || srcs.length <= 1) {
       const interval = setInterval(() => {
         setImageIndex((prevIndex) =>
           prevIndex + 1 < srcs.length ? prevIndex + 1 : 0
@@ -45,7 +45,9 @@ const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
         height={height}
       />
       <a
-        className={`${arrowStyles} rounded-r-sm`}
+        className={`${arrowStyles} rounded-r-sm ${
+          srcs.length <= 1 ? "hidden" : ""
+        }`}
         onClick={() => {
           setImageIndex((prevIndex) =>
             prevIndex - 1 > 0 ? prevIndex - 1 : srcs.length - 1
@@ -56,7 +58,9 @@ const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
         &#10094;
       </a>
       <a
-        className={`${arrowStyles} right-0 rounded-l-sm`}
+        className={`${arrowStyles} right-0 rounded-l-sm ${
+          srcs.length <= 1 ? "hidden" : ""
+        }`}
         onClick={() => {
           setImageIndex((prevIndex) =>
             prevIndex + 1 < srcs.length ? prevIndex + 1 : 0
@@ -67,20 +71,24 @@ const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
         &#10095;
       </a>
 
-      <div className="text-center mt-2">
-        {Array.from({ length: srcs.length }).map((_, index) => (
-          <span
-            key={index}
-            onClick={() => {
-              setImageIndex(index);
-              setSlideshowAnimationDuration(0);
-            }}
-            className={`cursor-pointer h-3 w-3 ${
-              index === imageIndex ? "bg-zinc-200" : "bg-zinc-400"
-            } mx-1 rounded-full inline-block`}
-          ></span>
-        ))}
-      </div>
+      {srcs.length > 1 ? (
+        <div className="text-center mt-2">
+          {Array.from({ length: srcs.length }).map((_, index) => (
+            <span
+              key={index}
+              onClick={() => {
+                setImageIndex(index);
+                setSlideshowAnimationDuration(0);
+              }}
+              className={`cursor-pointer h-3 w-3 ${
+                index === imageIndex ? "bg-zinc-200" : "bg-zinc-400"
+              } mx-1 rounded-full inline-block`}
+            ></span>
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
