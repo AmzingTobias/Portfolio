@@ -9,13 +9,13 @@ const NavBar = () => {
       <nav className="text-center mb-4 text-xl">
         <ul>
           <li className={navbarStyles}>
-            <Link href="/">Home</Link>
+            <Link href="/">About me</Link>
           </li>
           <li className={navbarStyles}>
-            <Link href="/projects">Projects</Link>
+            <Link href="/projects">My project's</Link>
           </li>
           <li className={navbarStyles}>
-            <Link href="/prior-experience">Prior experience</Link>
+            <Link href="/prior-experience">My experience</Link>
           </li>
         </ul>
       </nav>
