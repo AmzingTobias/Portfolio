@@ -28,7 +28,7 @@ export default function Home() {
             Hi, my name is Tobias. I&apos;m {getAge()} years old and attending
             Loughborough University. I&apos;m in my final year, studying
             Computer Science BSc and will graduate in the summer of 2024.
-            I&apos;m currently on track for a first.
+            I&apos;m currently on track for a First.
           </p>
           <div className="my-6" />
           <p>
