@@ -32,7 +32,7 @@ export default function Home() {
           </p>
           <div className="my-6" />
           <p>
-            I&apos;m hard working and very dedicated, with my placement year
+            I&apos;m hard-working, dedicated and focused, with my placement year
             manager describing my work ethic as &quot;exceptional&quot;. For as
             long as I can remember I&apos;ve had a passion for technology and
             programming. When I was 5 years old, I bought a trampoline with my
