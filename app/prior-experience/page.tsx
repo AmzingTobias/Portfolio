@@ -30,7 +30,7 @@ const prior_experiences: TTimelineEvent[] = [
     ],
   },
   {
-    title: "McDonald’s",
+    title: "McDonald's",
     role: "Crew Trainer",
     startdate: "2018",
     endDate: "2022",
@@ -69,7 +69,7 @@ const prior_experiences: TTimelineEvent[] = [
     role: "Work experience",
     startdate: "2019",
     details:
-      "This was a second job alongside McDonalds that allowed me to help save for a car, which gave me more flexibility in my working times at McDonalds",
+      "This was a second job alongside McDonald's that allowed me to help save for a car, which gave me more flexibility in my working times at McDonald's",
     bulletpointLists: [
       { title: "Responsibilities", points: ["General administration work"] },
     ],
