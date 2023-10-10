@@ -35,7 +35,7 @@ export default function Home() {
             I&apos;m hard-working, dedicated and focused, with my placement year
             manager describing my work ethic as &quot;exceptional&quot;. For as
             long as I can remember I&apos;ve had a passion for technology and
-            programming. When I was 5 years old, I bought a trampoline with my
+            programming. When I was 5-years-old, I bought a trampoline with my
             parents&apos; eBay account (I didn&apos;t get to keep it). I&apos;ve
             known since starting high school that I wanted to be a Software
             Engineer.
@@ -64,7 +64,7 @@ export default function Home() {
           <div className="my-6" />
           <p>
             Although my passion is technology, I also have a strong interest in
-            economics and business. I keep up to date with the stock market and
+            economics and business. I keep up-to-date with the stock market and
             follow the news regularly to stay informed with what&apos;s
             happening around the world.
           </p>
