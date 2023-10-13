@@ -38,7 +38,7 @@ const prior_experiences: TTimelineEvent[] = [
       {
         title: "Highlights:",
         points: [
-          "Within the first year received employee of the month and employee of the quarter (out of approx. 100 employees)",
+          "Within the first year I received the employee of the month award and subsequently the employee of the quarter award (out of approx. 100 employees)",
         ],
       },
       {
