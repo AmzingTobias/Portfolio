@@ -1,7 +1,7 @@
 import ProjectTemplate, { TProjectTemplate } from "../ProjectTemplate";
 
-const sudoku_project: TProjectTemplate = {
-  project_name: "Ecommerce (University Project plan)",
+const ecommerce_project: TProjectTemplate = {
+  project_name: "Ecommerce (University Project - IN PROGRESS)",
   project_details: [
     "My idea is to create a fully comprehensive e-commerce platform. This means that I would create an online shopping platform, that will allow customers to create accounts, place orders and then track these orders, up until delivery is complete. While in the backend an inventory system keeps track of the total stock, and orders that have been placed. With an increasing number of purchases being made online I believe there’s a strong market for this platform to exist.",
     " ",
@@ -32,22 +32,33 @@ const sudoku_project: TProjectTemplate = {
     " ",
     "The inventory management system will be designed / developed in a way that allows it to be incorporated into existing websites, it will have no dependency on the online shopping website I’ll create. This allows it to be sold as a separate product to businesses to increase its appeal. But if desired, businesses will be able to purchase the complete package, giving them a website that can take orders, and a system for their warehouses to use.",
   ],
-  project_btns: {},
+  project_btns: {
+    github_links: [
+      {
+        display: "Front end",
+        link: "https://github.com/AmzingTobias/chop-front-end",
+      },
+      {
+        display: "Back end",
+        link: "https://github.com/AmzingTobias/chop-back-end",
+      },
+    ],
+  },
   use_row: false,
 };
 
-const SudokuProjectPage = () => {
+const EcommerceProjectPage = () => {
   return (
     <main className="w-full">
       <ProjectTemplate
-        project_name={sudoku_project.project_name}
-        image_details={sudoku_project.image_details}
-        project_details={sudoku_project.project_details}
-        project_btns={sudoku_project.project_btns}
+        project_name={ecommerce_project.project_name}
+        image_details={ecommerce_project.image_details}
+        project_details={ecommerce_project.project_details}
+        project_btns={ecommerce_project.project_btns}
         use_row={false}
       />
     </main>
   );
 };
 
-export default SudokuProjectPage;
+export default EcommerceProjectPage;
