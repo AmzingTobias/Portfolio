@@ -1,6 +1,6 @@
 import ProjectTemplate, { TProjectTemplate } from "../ProjectTemplate";
 import homepageImage from "@/public/ecommerce/homepage.png";
-import productDetails1Image from "@/public/ecommerce/Product-details-1.png";
+import productDetails1Image from "@/public/ecommerce/product-details-1.png";
 import productDetails2Image from "@/public/ecommerce/product-details-2.png";
 import searchPageImage from "@/public/ecommerce/search.png";
 
