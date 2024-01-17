@@ -1,4 +1,8 @@
 import ProjectTemplate, { TProjectTemplate } from "../ProjectTemplate";
+import homepageImage from "@/public/ecommerce/homepage.png";
+import productDetails1Image from "@/public/ecommerce/Product-details-1.png";
+import productDetails2Image from "@/public/ecommerce/product-details-2.png";
+import searchPageImage from "@/public/ecommerce/search.png";
 
 const ecommerce_project: TProjectTemplate = {
   project_name: "Ecommerce (University Project - IN PROGRESS)",
@@ -32,6 +36,18 @@ const ecommerce_project: TProjectTemplate = {
     " ",
     "The inventory management system will be designed / developed in a way that allows it to be incorporated into existing websites, it will have no dependency on the online shopping website I’ll create. This allows it to be sold as a separate product to businesses to increase its appeal. But if desired, businesses will be able to purchase the complete package, giving them a website that can take orders, and a system for their warehouses to use.",
   ],
+  image_details: {
+    srcs: [
+      homepageImage,
+      productDetails1Image,
+      productDetails2Image,
+      searchPageImage,
+    ],
+    animated: false,
+    height: 1536,
+    width: 1536,
+    slideshowSpeedMs: 2500,
+  },
   project_btns: {
     github_links: [
       {

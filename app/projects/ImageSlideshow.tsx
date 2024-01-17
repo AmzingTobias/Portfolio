@@ -1,9 +1,11 @@
 "use client";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export interface IImageSlideshowProps {
-  srcs: string[];
+  srcs: StaticImport[];
+  animated: boolean;
   width: number;
   height: number;
   slideshowSpeedMs: number;
@@ -11,6 +13,7 @@ export interface IImageSlideshowProps {
 
 const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
   srcs,
+  animated,
   width,
   height,
   slideshowSpeedMs,
@@ -41,6 +44,8 @@ const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
       <Image
         src={srcs[imageIndex]}
         alt="slideshow"
+        placeholder={animated ? undefined : `blur`}
+        priority
         width={width}
         height={height}
       />

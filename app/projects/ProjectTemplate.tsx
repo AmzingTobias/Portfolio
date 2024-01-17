@@ -29,6 +29,7 @@ const ProjectTemplate: React.FC<IProjectTemplateProps> = ({
             >
               <ImageSlideshow
                 srcs={image_details.srcs}
+                animated={image_details.animated}
                 height={image_details.height}
                 width={image_details.width}
                 slideshowSpeedMs={image_details.slideshowSpeedMs}

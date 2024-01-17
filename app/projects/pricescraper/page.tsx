@@ -20,12 +20,8 @@ const priceScraper_project: TProjectTemplate = {
     ],
   ],
   image_details: {
-    srcs: [
-      homepageImage.src,
-      gamepageImage.src,
-      editGameDetailsImage.src,
-      discordImage.src,
-    ],
+    srcs: [homepageImage, gamepageImage, editGameDetailsImage, discordImage],
+    animated: false,
     height: 1536,
     width: 1536,
     slideshowSpeedMs: 2500,

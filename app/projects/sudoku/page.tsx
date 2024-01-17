@@ -10,7 +10,8 @@ const sudoku_project: TProjectTemplate = {
     "The algorithm implementation used for solving the Sudoku is backtracking, while not as efficient as other algorithms, it was quick enough for my needs.",
   ],
   image_details: {
-    srcs: [sudokuGif.src],
+    srcs: [sudokuGif],
+    animated: true,
     height: 1536,
     width: 1536,
     slideshowSpeedMs: 0,

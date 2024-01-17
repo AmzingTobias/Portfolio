@@ -6,7 +6,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <nav className="text-center mb-4 text-2xl ">
+      <nav className="text-center mb-4 text-2xl select-none">
         <ul>
           <li className={navbarStyles}>
             <Link href="/">About me</Link>
