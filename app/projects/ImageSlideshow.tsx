@@ -55,7 +55,7 @@ const ImageSlideshow: React.FC<IImageSlideshowProps> = ({
         }`}
         onClick={() => {
           setImageIndex((prevIndex) =>
-            prevIndex - 1 > 0 ? prevIndex - 1 : srcs.length - 1
+            prevIndex - 1 >= 0 ? prevIndex - 1 : srcs.length - 1
           );
           setSlideshowAnimationDuration(0);
         }}
