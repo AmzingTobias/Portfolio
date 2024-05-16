@@ -9,13 +9,24 @@ const NavBar = () => {
       <nav className="text-center mb-4 text-2xl select-none">
         <ul>
           <li className={navbarStyles}>
-            <Link href="/">About me</Link>
+            <Link href="/" className="no-underline">
+              About me
+            </Link>
           </li>
           <li className={navbarStyles}>
-            <Link href="/projects">My projects</Link>
+            <Link href="/projects" className="no-underline">
+              My projects
+            </Link>
           </li>
           <li className={navbarStyles}>
-            <Link href="/prior-experience">My experience</Link>
+            <Link href="/prior-experience" className="no-underline">
+              My experience
+            </Link>
+          </li>
+          <li className={navbarStyles}>
+            <Link href="/ctf-walkthroughs" className="no-underline">
+              CTF walkthroughs
+            </Link>
           </li>
         </ul>
       </nav>

