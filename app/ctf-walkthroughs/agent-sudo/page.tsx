@@ -3,7 +3,7 @@ import path from "path";
 const AgentSudoCTFPage = () => {
   const filePath = path.join(
     process.cwd(),
-    "public\\ctf",
+    "public/ctf",
     "Agent Sudo CTF Writeup 8351ac91c6d94985b939e278c7d15e59.html"
   );
   const htmlContent = fs.readFileSync(filePath, "utf-8");
