@@ -1,0 +1,669 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Valley CTF Writeup</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgb(252, 252, 252);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="27425707-325b-4fa3-a55a-5337eeb00bdb" class="page sans"><header><h1 class="page-title">Valley CTF Writeup</h1><p class="page-description"></p></header><div class="page-body"><p id="acdecd67-a607-40e3-ba34-da1c7b74c566" class="">Link: <a href="https://tryhackme.com/r/room/valleype">https://tryhackme.com/r/room/valleype</a></p><nav id="3b8017b8-8e39-40e9-88c5-8ea6f99028be" class="table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8053ea4b-cc91-4c40-a00c-105801209616">Enumerate</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#98615fa9-2d80-4a80-9e62-7a4bec446655">Port scan</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5193a92b-4105-4793-967a-dfe1f94fffe6">Directory search</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#25da58af-dc30-4567-b737-0b68c17b26cd">Gobuster</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d0d957e5-f535-4a8c-85fe-a3101bf73b7c">IDOR</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0405cef7-2cb0-4b38-ab67-1bd8ba3d04af">FTP server</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#29557d90-3dd8-4243-bf35-44e6049fec47">.pcapng</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7788ede3-0898-4194-af66-490915d732c8">Exploiting</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b575a18d-af01-407d-a1be-c1ad3ad3defb">Flags</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9cec6c9b-52ae-4255-9042-9be22d4a762d">User flag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d017683b-c3e9-4429-99e7-7549ec919288">Root flag</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d8890d83-10bb-4597-b479-188d4ffd4913">Exploring the /home directory</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c453d5e5-6977-4c5a-a8e7-53193d24732f">Inspecting valleyAuthenticator</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0532f3bd-f98b-4f07-91da-763369592141">User: valley</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cf7b2219-9c9f-4eca-8d8c-e82419272e0f">Getting access to root</a></div></nav><h1 id="8053ea4b-cc91-4c40-a00c-105801209616" class="">Enumerate</h1><h2 id="98615fa9-2d80-4a80-9e62-7a4bec446655" class="">Port scan</h2><p id="94d1ebec-ae09-423e-8093-003392aba776" class="">To scan for open ports I’m going to use rustscan to find all the open ports, and then pass these ports into nmap for further information on the services running on those ports.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7f40720d-d2b1-4dcd-8fe5-e6b1a953265f" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">rustscan --ulimit 5000 -a 10.10.71.167</code></pre><figure id="82ec6abd-05f1-4cba-8468-bd99fc5e0dcd" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%201.png"><img style="width:191px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%201.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ca1068e8-4ca7-4a24-9ae0-5fe1263850ee" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">sudo nmap -vv -oA scan-script -p22,80,37370 -sC -sV 10.10.71.167</code></pre><ul id="caf8e0eb-5b75-49b0-90e5-73cbe2b88338" class="bulleted-list"><li style="list-style-type:disc">-vv - Verbose output</li></ul><ul id="2289c2ff-66a0-40f1-8159-b297ea46a8db" class="bulleted-list"><li style="list-style-type:disc">-oA - Output to three common filetypes</li></ul><ul id="6a051e0c-828d-4c78-9c55-7ada5496c5a3" class="bulleted-list"><li style="list-style-type:disc">-p - List of ports to scan</li></ul><ul id="5dee06db-72a1-4b02-919f-08840b1c67ed" class="bulleted-list"><li style="list-style-type:disc">-sC - Executes some default scripts</li></ul><ul id="1c3c167a-df33-4a33-9ef9-37d24ed22589" class="bulleted-list"><li style="list-style-type:disc">-sV - Probe open ports to determine version number</li></ul><figure id="2a556094-0915-497c-a801-a399fb43362b" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%202.png"><img style="width:708px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%202.png"/></a></figure><p id="5c024102-3b47-4570-b36b-7c2e57b977a2" class="">So in total <strong>3 ports </strong>were found, with the services</p><ul id="6b84a86d-c463-4b62-9c47-f00454f868c1" class="bulleted-list"><li style="list-style-type:disc">SSH (22)</li></ul><ul id="ff44de80-53dd-44f0-be8c-d5af48214cf1" class="bulleted-list"><li style="list-style-type:disc">HTTP (80)</li></ul><ul id="05d91f0d-8b2e-4175-8f9e-8541886b0e95" class="bulleted-list"><li style="list-style-type:disc">FTP (37370)</li></ul><p id="4a43fb3c-be7f-4107-b089-2424af832718" class="">running on the server.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="08f3c485-3fb1-4301-8a19-5f86c5dc8a02" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">ftp 10.10.71.167 -P 37370</code></pre><p id="a54f508d-a3b2-4587-afdc-3f0d9cd3342b" class="">The FTP server does not support anonymous login.</p><p id="100efa89-10db-4341-bbaf-8263e483ec21" class="">
+</p><p id="4287a391-ff20-477b-a899-c881504023aa" class="">I also checked for the version numbers for all the services found, none of them seem to list any known vulnerabilities that can be exploited for this CTF.</p><h2 id="5193a92b-4105-4793-967a-dfe1f94fffe6" class="">Directory search</h2><p id="1ef195bb-3720-4d56-bf00-a1448a125cbf" class="">Now exploring the HTTP server that was found.</p><p id="9a99ce1c-4b29-448e-8a76-f0cff491b04d" class="">There is no robots.txt file present</p><p id="1c85f46d-61cc-4a06-8734-3eeb200cc38e" class="">Visiting the gallery page shows a list of images, when clicking on these we can see the URL is using an id to display the image:</p><figure id="917e7ae0-77f6-415e-af18-525fb0b1cf06" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%203.png"><img style="width:150px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%203.png"/></a></figure><p id="6d77d3d3-3fe9-493a-94d0-8b6469debb51" class="">It is possible something can be found my manipulating this ID (IDOR - Insecure Direct Object Reference).</p><h3 id="25da58af-dc30-4567-b737-0b68c17b26cd" class="">Gobuster</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3bf7bfde-aa6d-4f4e-86b6-5ca4d510db39" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-small.txt -x php,txt,zip,html,bak -t 20 -u http://10.10.71.167 | tee directory-search.txt</code></pre><ul id="063606b5-ab9f-4863-98de-dad305d4ce47" class="bulleted-list"><li style="list-style-type:disc">-w The word list file to use</li></ul><ul id="99995a24-ab77-42b4-b0b3-5a52b87a007a" class="bulleted-list"><li style="list-style-type:disc">-x The file types to look for</li></ul><ul id="f9214590-acf6-4f1e-a0d6-8ec9d541f6d0" class="bulleted-list"><li style="list-style-type:disc">-t The number of threads to use</li></ul><ul id="3156c717-9006-4a5f-bc6d-00a00016a982" class="bulleted-list"><li style="list-style-type:disc">-u The address to search through</li></ul><ul id="88b2ae24-e130-478d-8295-32ea281304c2" class="bulleted-list"><li style="list-style-type:disc">tee Output everything printed to a file</li></ul><figure id="4f0af682-dbd7-4f9b-ab39-ab31a1b34910" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%204.png"><img src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%204.png"/></a></figure><p id="825fa82d-7ac3-48a6-8e08-44d629e9d3d5" class="">Nothing of importance was found from this search</p><h3 id="d0d957e5-f535-4a8c-85fe-a3101bf73b7c" class="">IDOR</h3><p id="e37d44d1-d609-4f7d-a395-f5039b3d051e" class="">We’re going to use BurpSuite to try and see if there’s anything to be found by manipulating the image ID.</p><p id="930f09f4-54eb-4e14-80b0-3ba75527db71" class="">Visiting one of the /static/imageId pages with the BurpSuite browser, we can then send this request to the intruder.</p><p id="c36addc4-a0a3-40e9-954a-aec785068006" class="">Here, we specify where we want the payload to be placed:</p><figure id="416eaf23-6333-45f1-8ae2-c5dd88c2472f" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%205.png"><img style="width:708px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%205.png"/></a></figure><p id="c614851c-ea39-4984-aa14-4713eb9e04df" class="">Next, we need to set our payload. Initially I’m going to use 0-99, using singular digits.</p><figure id="201926f0-f1ad-42ad-bf99-e86a20fbb266" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%206.png"><img style="width:558px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%206.png"/></a></figure><p id="f183b9b9-320d-44ac-8b08-24a64be04d46" class="">After starting the attack and analyzing the results. Nothing stood out.</p><p id="c140653a-91c1-459f-af00-509e02d1471f" class="">But changing the payload to use double digits for all numbers. </p><figure id="ed3ac35a-faf9-4d14-83fa-138327dfb360" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%207.png"><img style="width:210px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%207.png"/></a></figure><figure id="85ab713a-38a4-42e8-bae9-ca70daf63fa6" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%208.png"><img style="width:708px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%208.png"/></a></figure><p id="8d862815-0352-4cc2-b7ba-be9931db8691" class="">Shows we now have a hit with /00</p><p id="3d2e55f5-b480-43f8-a891-5cf833d931e1" class="">http://10.10.71.167/static/00</p><figure id="e5866628-4684-47fa-a295-b8330e36ace2" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%209.png"><img style="width:209px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%209.png"/></a></figure><p id="3be92590-0c4e-488f-80d9-8e0c6422eaae" class="">The message found at this location shows another directory to look at.</p><p id="51cb3c96-ca04-4843-ae64-fd265e776752" class=""><strong>/dev1243224123123</strong></p><figure id="d767f244-7663-46fe-81c2-62d167b1c1ff" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2010.png"><img style="width:456px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2010.png"/></a></figure><p id="e5b4adb5-21bb-4ec8-9869-e01a7697d039" class="">That page brings us to a login form.</p><figure id="0a61d9a0-3568-403e-9be1-8298c650e5ea" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2011.png"><img style="width:539px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2011.png"/></a></figure><p id="cfae8252-0999-4505-b308-308ca1d7d529" class="">If we inspect the source code for this document we can see it links to a dev.js file.</p><figure id="f42874d9-b69f-4523-b040-2b72f7c8e403" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2012.png"><img style="width:519px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2012.png"/></a></figure><p id="17f8f455-c754-4a9f-99a0-2e7f91ab7513" class="">Inspecting this file shows the credentials needed for the login form.</p><p id="232f84ff-d3a3-43c6-9adf-a16695fe3301" class="">siemDev:california</p><figure id="3933a394-f632-49e9-b583-0b0881481c80" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2013.png"><img style="width:237px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2013.png"/></a></figure><p id="ef46d29f-0235-4e93-b7cb-f4d1118e7208" class="">After logging in, we find that the credentials for the FTP server match the ones we just used.</p><h2 id="0405cef7-2cb0-4b38-ab67-1bd8ba3d04af" class="">FTP server</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b08d1a76-50f8-4e6d-ac70-66e67d918808" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">ftp siemDev@10.10.71.167 -P 37370</code></pre><figure id="86b40d63-3aae-4bb0-bacf-51f56b504b9e" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2014.png"><img style="width:581px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2014.png"/></a></figure><p id="cc57b9c1-14fa-4d71-ae15-6ec5fa41d4b2" class="">Listing the contents found in the home directory (dir) shows three .pcapng files</p><p id="43067c8b-538e-43c2-892b-2d8a2fe008d9" class="">We can use mget to transfer all the files found.</p><p id="76252866-f519-4d5f-ba7d-da42c078248c" class="">Testing directory traversal with cd .. doesn’t work.</p><h2 id="29557d90-3dd8-4243-bf35-44e6049fec47" class="">.pcapng</h2><p id="501e8a7f-d03b-4318-80e8-76ef6d4ef347" class="">We can open the three files we found in Wireshark</p><p id="afc9d81b-3685-4a51-bb3c-3c067d6f1382" class="">Searching through these results we find in the siemHTTP2.pcapng file that some credentials were sent using HTTP.</p><figure id="fdb04fbe-edc0-43de-a90d-96c9f8d8b6bc" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2015.png"><img style="width:708px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2015.png"/></a></figure><p id="32b6ac48-d1dd-45f5-8a67-7e6fc30612be" class="">These credentials were used to login to the valleyDev account (the author who left the note in /static/00)</p><figure id="d4bc4971-6ea8-4639-8783-f8093f7954c8" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2016.png"><img style="width:393px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2016.png"/></a></figure><h1 id="7788ede3-0898-4194-af66-490915d732c8" class="">Exploiting</h1><p id="26c8b344-780c-4817-b101-230fbf55528d" class="">Now with credentials to an account we can try and access the server with SSH</p><p id="a0ed0237-a198-43bf-836c-28d1d40ca2ad" class="">valleyDev:ph0t0s1234</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="152e4072-c82e-4348-8281-a1e57aa631e5" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">ssh valleyDev@10.10.71.167 </code></pre><p id="849ee665-cfac-4e35-b22f-f1732f6061ac" class="">That worked and we now have access to valleyDev</p><h1 id="b575a18d-af01-407d-a1be-c1ad3ad3defb" class="">Flags</h1><h2 id="9cec6c9b-52ae-4255-9042-9be22d4a762d" class="">User flag</h2><p id="33fafc8d-5731-4c71-91a0-1ddb47fcc0da" class="">Looking in valleyDev’s home directory, we find the first flag in user.txt</p><figure id="68b01cc9-98b3-4a59-a087-f5da2cfb3836" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2017.png"><img style="width:519px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2017.png"/></a></figure><h2 id="d017683b-c3e9-4429-99e7-7549ec919288" class="">Root flag</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="509bc89d-84fd-4b09-8235-7bd7ffd68ce0" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">sudo -l</code></pre><p id="636138a0-cfc8-4f9f-b4cb-db622db9889e" class="">Is the first command I ran, which shows that valleyDev does not have access to sudo</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="730831fe-df22-439e-9ac3-40926630a5d0" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">find / -perm -u=s -type f 2&gt;/dev/null</code></pre><p id="e4554b8d-a5ec-4a9b-8228-79dde42196ec" class="">The next command ran aimed to find any files with the SUID / SGID permission set.</p><p id="30a9d434-3b61-4122-b2b2-103bd3c3fd55" class="">However, nothing listed from these files appeared exploitable.</p><h3 id="d8890d83-10bb-4597-b479-188d4ffd4913" class="">Exploring the /home directory</h3><figure id="7bf787ae-39ae-485d-a898-8e22f6c8c47b" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2018.png"><img style="width:591px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2018.png"/></a></figure><figure id="1e1008c8-7b81-4396-b677-12cc27dce13b" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2019.png"><img style="width:708px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2019.png"/></a></figure><p id="1d6a34e9-73ca-4345-a1b4-4175e608f002" class="">If we list the files found in /home, we see a folder called valley, which only that user can access, and a binary file called valleyAuthenticator, that we can execute, but not write to.</p><h3 id="c453d5e5-6977-4c5a-a8e7-53193d24732f" class="">Inspecting valleyAuthenticator</h3><p id="20b2806c-9a18-4da7-ab36-f8189bee98cc" class="">We transfer valleyAuthenticator over to our local machine to try and reverse engineer it.</p><p id="04a8ccb6-5924-4183-bd18-351328315e36" class="">I’m going to use SFTP to do this.</p><p id="4b5cf301-2b85-4cca-91b0-518bc46645a5" class="">For the first step in inspecting the file, I ran strings on it.</p><figure id="a6c8726c-add9-4b4d-8912-96f6cc7f0e57" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2020.png"><img style="width:44px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2020.png"/></a></figure><p id="faba866b-0df1-4e2c-b919-b02905a99e5a" class="">Here I found it had been obfuscated with upx.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4d4ad1b4-80f4-4dc5-83dc-a53e26eb6efa" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">upx -d valleyAuthenticator -o valleyAuthenticator-decompress</code></pre><p id="01229f4c-b6e4-49ed-a05d-c3864ca1c7c6" class="">Can be used to decompress the file.</p><p id="951df131-a36c-4d23-a09f-7d01fed8848e" class="">With the executable now decompressed, we can load it into Ghidra to better understand how it works.</p><p id="b468a3c7-57c6-4c21-8d6a-11a35d2b6369" class="">We open up the code browser and import the file.</p><figure id="4e94091d-552a-43fa-bd07-e18b21e1f8a7" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2021.png"><img style="width:673px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2021.png"/></a></figure><p id="8f94b717-297c-40c4-a461-17efa14f0bf4" class="">The file appears to confirm if credentials are correct</p><figure id="98c38746-a31a-4699-bcc8-33243ab43901" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2022.png"><img style="width:474px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2022.png"/></a></figure><p id="8fc920ac-72ba-4700-b2ef-2618330dbfe6" class="">Two MD5 hashes can be found in the main function.</p><figure id="5c51e33c-52ac-412d-8cc9-0a4bf15892e5" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2023.png"><img style="width:708px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2023.png"/></a></figure><p id="52d059d6-823e-4eaa-b376-76107a4d9f49" class="">To decode these we upload them to crackstation. They give the user valley, and their password</p><p id="757e752b-a323-4d47-a9fa-c4825cfefca0" class="">valley:liberty123</p><h3 id="0532f3bd-f98b-4f07-91da-763369592141" class="">User: valley</h3><p id="9e87d4ae-90fa-4e22-8b3c-96f5a71bcda4" class="">After logging in to this account, we still can’t access root. So further escalation is needed.</p><p id="98f76d0b-3e56-42f3-8b9a-935b210831e3" class="">The user valley cannot use sudo -l either.</p><p id="8abfb66b-bdb2-4458-89f5-15b1b8dd92ad" class="">Running</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4776cd5a-2f4c-4a04-9311-c4ab6781517e" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">find / -perm -u=s -type f 2&gt;/dev/null</code></pre><p id="562ed268-9222-40c6-b683-c0f8b3a7f16a" class="">again yielded no results of relevance</p><p id="83e1b227-3213-4d2e-bb8a-e52bf9a761c4" class="">Checking for cron jobs with</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4939f725-f403-4c9f-8712-ca1e412f7539" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">cat /etc/crontab</code></pre><figure id="8129883b-27d9-470b-b39d-dc7fd1c693f9" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2024.png"><img style="width:708px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2024.png"/></a></figure><p id="7dd105bb-177a-42dc-9e69-1ffaf8b221d8" class="">Shows there’s a python script being run as root every minute</p><figure id="9203ff00-20ec-48a6-9f2b-e26a529e66c5" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2025.png"><img style="width:465px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2025.png"/></a></figure><p id="0216a2c4-4dfe-41a1-a9be-bd2aa897aa9c" class="">We can inspect the file but not write to it</p><figure id="f857c4e0-8e5a-49de-b784-18a650b5492d" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2026.png"><img style="width:501px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2026.png"/></a></figure><p id="bfea1a65-deb3-4ad1-bfe4-e54e1d717a7b" class="">The file looks to backup some image data, but more importantly, it uses the base64 library. If we have write permissions on that file, we’ll be able to include an exploit, which will then be called by this <a href="http://photosEncrypt.py">photosEncrypt.py</a> file.</p><p id="cd0182e3-8d74-4da6-969f-121e03ba8c74" class="">I locate the <a href="http://base64.py">base64.py</a> file</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b4466611-ca3e-47bd-8554-61bbf2ee3c42" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">find / -name base64.py 2&gt;/dev/null</code></pre><figure id="bbefa61e-be3e-4a93-80c8-5744c61ed86c" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2027.png"><img style="width:624px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2027.png"/></a></figure><p id="1c97a7ad-6300-4ca2-a556-039984dcb916" class="">Checking the permissions shows that valleyAdmin can write to it.</p><figure id="f6600719-57d8-4796-970c-4bf65a259c13" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2028.png"><img style="width:576px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2028.png"/></a></figure><p id="fee36bb8-53f6-4a77-bcd5-c12bc2342c47" class="">Which we happen to belong to!</p><h3 id="cf7b2219-9c9f-4eca-8d8c-e82419272e0f" class="">Getting access to root</h3><p id="d7399a57-ece8-4a77-b38d-92e3fbffdee5" class="">We edit the <a href="http://base64.py">base64.py</a> file to grant the S permission to /bin/bash</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="55b974f8-475d-4b54-975a-b3947944166c" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">import os
+os.system(&#x27;chmod u+s /bin/bash&#x27;)</code></pre><p id="3a36b6f3-7603-40a7-8bb2-9c7ea8c9c3a3" class="">After waiting for root to execute the <a href="http://photosencrypt.py">photosencrypt.py</a> file again, we can then create a root shell using</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="00f14513-5c3f-4501-b1a9-de491095330c" class="code"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">/bin/bash -p</code></pre><p id="ddfe4e35-fb03-48f6-89a4-cd5e940ae776" class="">Which drops the shell and gives us access to root</p><figure id="32519105-ebfa-4828-9b76-04c026027a19" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2029.png"><img style="width:679px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2029.png"/></a></figure><p id="8c3eab3a-e70a-4c2f-9b31-dfc79fa51d1f" class="">Finally we read the root.txt flag in /root</p><figure id="9b4bc222-0b34-4bfe-bf27-bc25e272fc84" class="image"><a href="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2030.png"><img style="width:294px" src="/ctf/Valley%20CTF%20Writeup%2027425707325b4fa3a55a5337eeb00bdb/Untitled%2030.png"/></a></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

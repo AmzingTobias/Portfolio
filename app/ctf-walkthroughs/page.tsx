@@ -1,5 +1,6 @@
 import ProjectCard from "@/app/projects/ProjectCard";
 import agentSudoImg from "@/public/ctf/Agent Sudo.png";
+import valleyImg from "@/public/ctf/Valley.png";
 
 export type TCTFDetails = {
   title: string;
@@ -12,8 +13,16 @@ const CTFWalkthroughPage = () => {
     project_page_link: "/ctf-walkthroughs/agent-sudo",
     image_link: agentSudoImg.src,
   };
+  const valleyWalkthrough: TCTFDetails = {
+    title: "Valley",
+    project_page_link: "/ctf-walkthroughs/valley",
+    image_link: valleyImg.src,
+  };
 
-  const allWalkthroughs: TCTFDetails[] = [agentSudoWalkthrough];
+  const allWalkthroughs: TCTFDetails[] = [
+    valleyWalkthrough,
+    agentSudoWalkthrough,
+  ];
 
   return (
     <main className="w-full">
