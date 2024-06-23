@@ -1,6 +1,7 @@
 import ProjectCard from "@/app/projects/ProjectCard";
 import agentSudoImg from "@/public/ctf/Agent Sudo.png";
 import valleyImg from "@/public/ctf/Valley.png";
+import mrRobotImg from "@/public/ctf/MrRobot.jpeg";
 
 export type TCTFDetails = {
   title: string;
@@ -18,8 +19,14 @@ const CTFWalkthroughPage = () => {
     project_page_link: "/ctf-walkthroughs/valley",
     image_link: valleyImg.src,
   };
+  const mrRobotWalkthrough: TCTFDetails = {
+    title: "Mr Robot",
+    project_page_link: "/ctf-walkthroughs/mr-robot",
+    image_link: mrRobotImg.src,
+  };
 
   const allWalkthroughs: TCTFDetails[] = [
+    mrRobotWalkthrough,
     valleyWalkthrough,
     agentSudoWalkthrough,
   ];
