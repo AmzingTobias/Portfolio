@@ -2,12 +2,12 @@ import Timeline, { TTimelineEvent } from "./Timeline";
 
 const prior_experiences: TTimelineEvent[] = [
   {
-    title: "Computer Science BSC",
+    title: "First Class Honours B.Sc Computer Science",
     role: "Loughborough university",
     startdate: "October 2020",
     endDate: "June 2024",
     bulletpointLists: [
-      { title: "", points: ["1st year mark: 82.7%", "2nd year mark: 75.6%"] },
+      { title: "", points: ["With Diploma in Professional Studies.", "Modules including: Cyber Security, Robotics, Data Mining & Machine Learning, Cloud Computing, Advanced Networking, Web Programming, Embedded Systems Programming, Object Oriented Programming."] },
     ],
   },
   {
