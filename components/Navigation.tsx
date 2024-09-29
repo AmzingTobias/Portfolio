@@ -42,7 +42,7 @@ const Navigation = () => {
           {nav_links.map((nav_link, key) => (
             <NavigationMenuItem key={key}>
               <Link href={nav_link.link} legacyBehavior passHref>
-                <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "text-lg font-bold")}>
+                <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "text-lg font-bold focus:text-green-400 hover:text-green-400 active:text-green-400")}>
                   {nav_link.display_text}
                 </NavigationMenuLink>
               </Link>
