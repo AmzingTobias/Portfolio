@@ -28,10 +28,10 @@ const nav_links: INavLink[] = [
     link: "/experience",
     display_text: "Experience"
   },
-  {
-    link: "/ctf",
-    display_text: "CTF Walkthroughs"
-  }
+  // {
+  //   link: "/ctf",
+  //   display_text: "CTF Walkthroughs"
+  // }
 ];
 
 const Navigation = () => {

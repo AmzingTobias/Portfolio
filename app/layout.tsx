@@ -39,7 +39,7 @@ export default function RootLayout({
         <div className="flex-grow">
           <Navigation />
           <div className="flex min-w-full justify-center">
-            <div className="flex min-h-full p-8 max-w-screen-lg">
+            <div className="flex min-h-full p-8 sm:w-11/12 lg:w-full max-w-screen-lg">
               {children}
             </div>
           </div>
