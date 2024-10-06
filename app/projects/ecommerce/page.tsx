@@ -1,14 +1,18 @@
-import ProjectTemplate, { TProjectTemplate } from "../ProjectTemplate";
+import Project, { TProject } from "@/components/project/Project";
 import homepageImage from "@/public/ecommerce/homepage.png";
 import productDetails1Image from "@/public/ecommerce/product-details-1.png";
 import productDetails2Image from "@/public/ecommerce/product-details-2.png";
 import searchPageImage from "@/public/ecommerce/search.png";
+import contactImage from "@/public/ecommerce/contact-us.png";
+import ordersImage from "@/public/ecommerce/orders.png";
 
-const ecommerce_project: TProjectTemplate = {
-  project_name: "Ecommerce (University Project - IN PROGRESS)",
+const ecommerce_project: TProject = {
+  project_name: "Ecommerce (University Project)",
   project_details: [
+    "I picked this as my university dissertation so I could improve my skills in web development. For this project I went through a complete development life cycle; during which I learnt about the necessity of design. Having to go through multiple iterations before finding a design I was satisfied with.",
+    "I created both the frontend and backend systems, as well as the PostgreSQL database. The frontend system uses Next.js, with the design utilising Tailwind CSS. The backend was created in Express. I opted to use TypeScript over JavaScript as I prefer a typed based language.",
+    "Below is my plan that I set out for my dissertation.",
     "My idea is to create a fully comprehensive e-commerce platform. This means that I would create an online shopping platform, that will allow customers to create accounts, place orders and then track these orders, up until delivery is complete. While in the backend an inventory system keeps track of the total stock, and orders that have been placed. With an increasing number of purchases being made online I believe there’s a strong market for this platform to exist.",
-    " ",
     "The system will require two external dependencies:",
     [
       "Payment providers (due to the complex security required).",
@@ -38,15 +42,16 @@ const ecommerce_project: TProjectTemplate = {
   ],
   image_details: {
     srcs: [
-      homepageImage,
-      productDetails1Image,
-      productDetails2Image,
-      searchPageImage,
+      { alt: "Home page", img: homepageImage },
+      { alt: "Product details", img: productDetails1Image },
+      { alt: "Product details continued", img: productDetails2Image },
+      { alt: "Search page", img: searchPageImage },
+      { alt: "Contact us page", img: contactImage },
+      { alt: "Orders page", img: ordersImage },
     ],
     animated: false,
     height: 1536,
     width: 1536,
-    slideshowSpeedMs: 2500,
   },
   project_btns: {
     github_links: [
@@ -66,7 +71,7 @@ const ecommerce_project: TProjectTemplate = {
 const EcommerceProjectPage = () => {
   return (
     <main className="w-full">
-      <ProjectTemplate
+      <Project
         project_name={ecommerce_project.project_name}
         image_details={ecommerce_project.image_details}
         project_details={ecommerce_project.project_details}

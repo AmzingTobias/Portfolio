@@ -1,7 +1,7 @@
-import sudokuGif from "../../../public/sudoku/showcase.gif";
-import ProjectTemplate, { TProjectTemplate } from "../ProjectTemplate";
+import sudokuGif from "@/public/sudoku/showcase.gif";
+import Project, { TProject } from "@/components/project/Project";
 
-const sudoku_project: TProjectTemplate = {
+const sudoku_project: TProject = {
   project_name: "Sudoku",
   project_details: [
     "I created this Sudoku solver while I was in Sixth form, I was interested in game development, and wanted some experience in using a game engine. I had a look around at the time and discovered Godot, I liked the idea of it being quite lightweight and so I got to learning.",
@@ -10,11 +10,10 @@ const sudoku_project: TProjectTemplate = {
     "The algorithm implementation used for solving the Sudoku is backtracking, while not as efficient as other algorithms, it was quick enough for my needs.",
   ],
   image_details: {
-    srcs: [sudokuGif],
-    animated: true,
-    height: 1536,
-    width: 1536,
-    slideshowSpeedMs: 0,
+    srcs: [{ alt: "Showcase of the sudoku application", img: sudokuGif }],
+    animated: false,
+    height: 1536 / 3,
+    width: 1536 / 3,
   },
   project_btns: {
     github_links: [
@@ -30,7 +29,7 @@ const sudoku_project: TProjectTemplate = {
 const SudokuProjectPage = () => {
   return (
     <main className="w-full">
-      <ProjectTemplate
+      <Project
         project_name={sudoku_project.project_name}
         image_details={sudoku_project.image_details}
         project_details={sudoku_project.project_details}

@@ -1,10 +1,10 @@
-import homepageImage from "../../../public/pricescraper/homepage.png";
-import gamepageImage from "../../../public/pricescraper/gamepage.png";
-import editGameDetailsImage from "../../../public/pricescraper/edit-gamedetails.png";
-import discordImage from "../../../public/pricescraper/discord.png";
-import ProjectTemplate, { TProjectTemplate } from "../ProjectTemplate";
+import homepageImage from "@/public/pricescraper/homepage.png";
+import gamepageImage from "@/public/pricescraper/gamepage.png";
+import editGameDetailsImage from "@/public/pricescraper/edit-gamedetails.png";
+import discordImage from "@/public/pricescraper/discord.png";
+import Project, { TProject } from "@/components/project/Project";
 
-const priceScraper_project: TProjectTemplate = {
+const priceScraper_project: TProject = {
   project_name: "PriceScraper",
   project_details: [
     "My goal with PriceScraper to turn my original price scraping program, that I was using via the command line, into a more user friendly and easily customizable tool. This involved me re-writing my original price scraping program, I did this to improve modularization, now it’s very quick and easy for me to add a new supported site that the program can scrape from, while before it was a lot more intertwined. I’ve also tried to improve the error handling, to stop the program from exiting when errors occur. With the new implementation, I had to create it with more than one user in mind, while with the original program, it was just me who used it. ",
@@ -20,11 +20,15 @@ const priceScraper_project: TProjectTemplate = {
     ],
   ],
   image_details: {
-    srcs: [homepageImage, gamepageImage, editGameDetailsImage, discordImage],
+    srcs: [
+      { alt: "Home page", img: homepageImage },
+      { alt: "View game chart page", img: gamepageImage },
+      { alt: "Edit game details page", img: editGameDetailsImage },
+      { alt: "Discord page", img: discordImage }
+    ],
     animated: false,
     height: 1536,
     width: 1536,
-    slideshowSpeedMs: 2500,
   },
   project_btns: {
     visit_links: [
@@ -49,8 +53,8 @@ const priceScraper_project: TProjectTemplate = {
 
 const PriceScraperProjectPage = () => {
   return (
-    <main className="w-full">
-      <ProjectTemplate
+    <main className="flex flex-col w-full">
+      <Project
         project_name={priceScraper_project.project_name}
         image_details={priceScraper_project.image_details}
         project_details={priceScraper_project.project_details}

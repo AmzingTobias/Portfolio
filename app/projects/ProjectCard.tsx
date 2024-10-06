@@ -1,23 +1,27 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { TProjectDetails } from "./page";
 
-interface IProjectCardProps extends TProjectDetails {}
+export interface IProjectDetails {
+  title: string;
+  project_page_link: string;
+  image: StaticImageData;
+  desc: string;
+};
 
-const ProjectCard: React.FC<IProjectCardProps> = ({
+const ProjectCard: React.FC<IProjectDetails> = ({
   title,
   project_page_link,
-  image_link,
+  image,
   desc,
 }) => {
   return (
     <div
       style={{ maxWidth: 432 }}
-      className="hover:cursor-pointer transition-colors duration-150 hover:bg-red-500 hover:bg-opacity-90"
+      className="hover:cursor-pointer transition-colors duration-150 hover:bg-green-400 hover:bg-opacity-80"
     >
       <Link href={project_page_link}>
         <Image
-          src={image_link}
+          src={image}
           alt={title}
           width={432}
           height={480}
@@ -26,10 +30,7 @@ const ProjectCard: React.FC<IProjectCardProps> = ({
         <div className="p-1">
           <h3 className="mt-2 text-2xl font-semibold">{title}</h3>
           {desc && (
-            <>
-              <hr className="opacity-90 my-1.5" />
-              <p>{desc}</p>
-            </>
+            <p>{desc}</p>
           )}
         </div>
       </Link>

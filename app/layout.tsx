@@ -1,27 +1,47 @@
-import NavBar from "@/components/NavBar";
-import "./globals.css";
 import type { Metadata } from "next";
+import localFont from "next/font/local";
+import "./globals.css";
+import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { Inter } from "next/font/google";
 
-// const inter = Inter({ subsets: ["latin"] });
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: "TDMD",
+  title: "Tobias Dunn",
   description: "Tobias Dunn's personal site",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
+      <body
+        className={`${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+      >
         <div className="flex-grow">
-          <NavBar />
-          <div className="content w-full sm:w-11/12 md:w-10/12 lg:w-9/12 max-w-7xl flex mx-auto bg-zinc-800 bg-opacity-20 mt-6 rounded-sm p-6">
-            {children}
+          <Navigation />
+          <div className="flex min-w-full justify-center">
+            <div className="flex min-h-full p-8 sm:w-11/12 lg:w-full max-w-screen-lg">
+              {children}
+            </div>
           </div>
         </div>
         <Footer />
