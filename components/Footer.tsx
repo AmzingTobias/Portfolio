@@ -2,7 +2,7 @@ import { MdEmail } from "react-icons/md";
 import { AiFillGithub } from "react-icons/ai";
 import { AiFillLinkedin } from "react-icons/ai";
 
-const CONTACT_EMAIL = "tobias@tdmd.co.uk";
+const CONTACT_EMAIL = "contact@tdmd.co.uk";
 
 const Footer = () => {
   return (
